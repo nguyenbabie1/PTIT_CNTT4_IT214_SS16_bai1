@@ -1,0 +1,43 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: flash-sale-cache
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/flash_sale_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+    username: root
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      connect-timeout: 2s
+      timeout: 2s
+
+  cache:
+    type: redis
+    cache-names: productPrices
+    redis:
+      time-to-live: 10m
+      cache-null-values: false
+      use-key-prefix: true
+
+logging:
+  level:
+    com.example.flashsale: INFO
